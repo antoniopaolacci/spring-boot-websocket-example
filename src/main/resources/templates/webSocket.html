@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Echo Web Socket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div>
+    <input type="text" id="messageinput"/>
+</div>
+<div>
+    <button type="button" onclick="openSocket();" >Open</button>
+    <button type="button" onclick="send();" >Send</button>
+    <button type="button" onclick="closeSocket();" >Close</button>
+</div>
+<!-- la risposta del server viene scritta quì -->
+<div id="messages"></div>
+
+<!-- Script che utilizza i WebSocket -->
+<script type="text/javascript">
+
+    var webSocket;
+    var messages = document.getElementById("messages");
+
+
+    function openSocket(){
+        // Assicura che sia aperta un unica connessione
+        if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
+            writeResponse("Connessione WebSocket già stabilita");
+            return;
+        }
+        // Creiamo una nuova istanza config
+        webSocket = new WebSocket("ws://127.0.0.1:8080/myHandler");
+
+        /**
+         * Facciamo il bind delle funzioni con gli eventi dei config
+         */
+        webSocket.onopen = function(event){
+            // quando viene aperta la connession inviamo un messagio di OK
+            // al server
+            // scrivo il messagio nella textbox e lo invio
+            writeResponse("OK");
+            send();
+        };
+
+        webSocket.onmessage = function(event){
+            writeResponse(event.data);
+        };
+
+        webSocket.onclose = function(event){
+            writeResponse("Connection closed");
+        };
+    }
+
+    /**
+     * Invia il contenuto della text input al server
+     */
+    function send(){
+        var text = document.getElementById("messageinput").value;
+        webSocket.send(text);
+    }
+
+    function closeSocket(){
+        webSocket.close();
+    }
+
+    function writeResponse(text){
+        messages.innerHTML += "<br/>" + text;
+    }
+
+</script>
+
+</body>
+</html>

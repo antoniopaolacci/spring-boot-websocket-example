@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+
+    <Properties>
+      <Property name="log-path">logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy/dd/MM HH:mm:ss,SSS} [%-5level] [%logger{36}] - %msg%n"/>
+        </Console>
+        <File name="File" fileName="${log-path}/spring-boot-websocket-example-app.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy/dd/MM HH:mm:ss,SSS} [%-5level] [%logger{36}] - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    
+    <Loggers>
+        <Logger name="it.example" level="debug" additivity="false">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Console"/>
+        </Root> 
+    </Loggers>
+    
+</Configuration>
