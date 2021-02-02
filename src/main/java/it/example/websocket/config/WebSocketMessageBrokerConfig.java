@@ -14,7 +14,6 @@ public class WebSocketMessageBrokerConfig implements WebSocketMessageBrokerConfi
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/queue", "/user");
         config.setApplicationDestinationPrefixes("/app");
-
     }
 
     @Override
@@ -22,4 +21,5 @@ public class WebSocketMessageBrokerConfig implements WebSocketMessageBrokerConfi
         registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
         return;
     }
+    
 }

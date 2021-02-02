@@ -21,7 +21,6 @@ public class WebSocketMessageBrokerController {
 
     @MessageMapping("/register")
     public void processMessageFromClient(@Payload Message message, SimpMessageHeaderAccessor headerAccessor) throws Exception {
-        // logger.info("sessionID" + message);
         System.out.println("sessionID " + message.getSessionId());
     }
 
